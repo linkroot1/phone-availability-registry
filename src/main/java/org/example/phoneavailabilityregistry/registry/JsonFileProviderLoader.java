@@ -27,10 +27,15 @@ public class JsonFileProviderLoader {
             throw new IOException("Providers file not found: " + path);
         }
 
-        List<Provider> providers = objectMapper.readValue(
-                Files.readAllBytes(path),
-                new TypeReference<List<Provider>>() {}
-        );
+        List<Provider> providers;
+        try {
+            providers = objectMapper.readValue(
+                    Files.readAllBytes(path),
+                    new TypeReference<List<Provider>>() {}
+            );
+        } catch (RuntimeException e) {
+            throw new IOException("Cannot parse providers file: " + path, e);
+        }
 
         registry.replaceAll(providers);
     }
