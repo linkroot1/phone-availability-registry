@@ -32,7 +32,6 @@ public class InMemoryProviderRegistry implements ProviderRegistry {
             }
         }
 
-        // Атомарная замена: сначала строим новую мапу, потом целиком подменяем содержимое.
         providers.clear();
         providers.putAll(replacement);
     }
